@@ -27,9 +27,9 @@ export const createStudent = async (req, res) => {
 
 //UPDATE
 export const editStudent = async (req, res) =>{
-    const {name, srcode, author} = req.body;
+    const {name, srcode, program} = req.body;
     const { id } = req.params;
-    const student = {id: parseInt(id), name, srcode, author};
+    const student = {id: parseInt(id), name, srcode, program};
 
     try{
         const updateStudent = await studentServices.updateStudent(student);
@@ -41,6 +41,25 @@ export const editStudent = async (req, res) =>{
         console.log(e);
         res.status(500).json({
             error: "Interval Server Error"
+        });
+    }
+}
+
+
+///DELETE
+export const deleteStudent = async (req, res) =>{
+    const { id } = req.params;
+
+    try{
+        const deletedstudent = await studentServices.deleteStudent(parseInt(id));
+        res.status(200).json({
+            success: true,
+            message: deletedstudent
+        });
+    }catch(e){
+        console.log(e);
+        res.status(500).json({
+            error: "Internal Server Error"
         });
     }
 }

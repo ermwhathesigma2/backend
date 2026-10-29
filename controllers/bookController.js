@@ -34,15 +34,35 @@ export const editBook = async (req, res) =>{
     const book = {id: parseInt(id), name, author};
 
     try{
-        const updateBook = await bookServices.updateBook(book);
+        const updatedBook = await bookServices.updateBook(book);
         res.status(200).json({
             success: true,
-            message: updateBook
+            message: updatedBook
         });
     }catch(e){
         console.log(e);
         res.status(500).json({
             error: "Interval Server Error"
+        });
+    }
+}
+
+
+//DELETE
+
+export const deleteBook = async (req, res) =>{
+    const { id } = req.params;
+
+    try{
+        const deletedBook = await bookServices.deleteBook(parseInt(id));
+        res.status(200).json({
+            success: true,
+            message: deletedBook
+        });
+    }catch(e){
+        console.log(e);
+        res.status(500).json({
+            error: "Internal Server Error"
         });
     }
 }
