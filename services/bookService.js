@@ -10,12 +10,9 @@ export const createBook = async(book) =>{
     return bookId
 }
 //UPDATE
-export const update = async (book) => {
-    const [result] = await pool.query (
-       "UPDATE book SET name= ?, author= ? WHERE id=?",
-        [book.name, book.author, book.id]
-    )
-     return result.affectedRows;
+export const updateBook = async(book) =>{
+    const updatedBook = await bookModels.update(book);
+    return updatedBook;
 }
 
 //DELET

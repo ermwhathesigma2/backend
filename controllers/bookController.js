@@ -1,4 +1,3 @@
-import { parse } from 'dotenv';
 import * as bookServices from '../services/bookService.js';
 
 export const fetchAllBooks = async(req, res) => {
