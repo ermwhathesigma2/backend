@@ -7,7 +7,12 @@ export const fetchAllBooks = async() => {
 
 
 const doesbookExist = async(book) => {
-    const existing = await bookModels.findBookByNameAndAuthor(book.name, book.author);
+    let existing;
+    if(Object.hasOwn(book, "id")){
+        existing = await bookModels.findBookById(book.id);
+    }else{
+        existing = await bookModels.findBookByNameAndAuthor(book.name, book.author);
+    }
 
     if(existing.length > 0) {
         return true;
@@ -27,17 +32,35 @@ export const createBook = async(book) =>{
         throw new Error ('Book already exist!');
     }
     const bookId = await bookModels.insert(book);
-    return bookId
+    return bookId;
 }
 
 //UPDATE
 export const updateBook = async(book) =>{
+     if(!book.name || !book.author){
+        throw new Error ('Name and Author is required');       
+    }
+
+    const existing = await doesbookExist(book);
+
+    if(!existing){
+        throw new Error ('Book does not exist!');
+    }
+
     const updatedBook = await bookModels.update(book);
     return updatedBook;
 }
 
 //DELET
 export const deleteBook = async(id) =>{
+    const book = {id};
+
+    const existing = await doesbookExist(book);
+
+      if(!existing){
+        throw new Error ('Book does not exist!');
+    }
+    
     const deletedBook = await bookModels.remove(id);
     return deletedBook;
 }

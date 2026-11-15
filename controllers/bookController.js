@@ -41,7 +41,7 @@ export const editBook = async (req, res) =>{
     }catch(e){
         console.log(e);
         res.status(500).json({
-            error: "Interval Server Error"
+            error: `${e.message || "Internal Server Error"}`
         });
     }
 }
@@ -61,7 +61,7 @@ export const deleteBook = async (req, res) =>{
     }catch(e){
         console.log(e);
         res.status(500).json({
-            error: "Internal Server Error"
+            error: `${e.message || "Internal Server Error"}`
         });
     }
 }
